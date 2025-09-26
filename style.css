@@ -1,0 +1,428 @@
+/* ---------- Base / Reset ---------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html, body {
+  height: 100%;
+}
+body {
+  font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #f5f0ff 0%, #ffe5f7 60%);
+  color: #1f1f35;
+  min-height: 100vh;
+  transition: background .4s ease, color .4s ease;
+  scroll-behavior: smooth;
+}
+/* theme */
+.dark-theme {
+  background: linear-gradient(135deg, #1f1f3f 0%, #2f255f 60%);
+  color: #e8e8f8;
+}
+
+/* ---------- Responsive basics (images, containers) ---------- */
+img, iframe, video { max-width: 100%; height: auto; display: block; }
+.container { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+
+/* ---------- Intro / Get Started ---------- */
+.intro-bg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  text-align: center;
+  background: linear-gradient(135deg, #845ec2 0%, #d65db1 60%);
+  color: #fff;
+  min-height: 100vh;
+}
+.intro-container {
+  width: 100%;
+  max-width: 700px;
+  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.08);
+  padding: 2.5rem 2rem;
+  border-radius: 18px;
+  box-shadow: 0 40px 100px -20px rgba(133,94,194,.45);
+  position: relative;
+  overflow: hidden;
+  margin: 0 12px;
+}
+.intro-container h1 {
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: .5px;
+  line-height: 1.05;
+}
+.intro-container p {
+  font-size: 1.1rem;
+  margin-bottom: 1.25rem;
+  color: rgba(255,255,255,0.95);
+}
+.primary-btn {
+  background: linear-gradient(135deg,#ff8acc 0%,#6a11cb 60%);
+  border: none;
+  color: #fff;
+  padding: 14px 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 999px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform .25s ease, filter .25s ease;
+  box-shadow: 0 15px 40px -10px rgba(106,17,203,.6);
+}
+.primary-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+.primary-btn.small {
+  padding: 8px 16px;
+  font-size: .8rem;
+}
+.buttons-row {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+}
+.small-note {
+  margin-top: 12px;
+  font-size: .8rem;
+  opacity: .95;
+}
+
+/* ---------- Layout ---------- */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  gap: 0;
+}
+.sidebar {
+  width: 220px;
+  background: #6a11cb;
+  color: #fff;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  flex-shrink: 0;
+}
+.sidebar h2 {
+  font-size: 1.4rem;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.sidebar button {
+  background: rgba(255,255,255,0.08);
+  border: none;
+  color: #fff;
+  padding: 12px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  font-size: .95rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  transition: background .2s ease, transform .2s ease;
+}
+.sidebar button:hover {
+  background: rgba(255,255,255,0.15);
+  transform: translateX(2px);
+}
+.sidebar-footer {
+  margin-top: auto;
+}
+.sidebar-footer button {
+  background: rgba(255,255,255,0.08);
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  font-size: .85rem;
+  transition: background .2s ease;
+}
+.sidebar-footer button:hover {
+  background: rgba(255,255,255,0.18);
+}
+
+.main {
+  flex: 1;
+  padding: 2rem 2.5rem;
+  overflow:auto;
+}
+.panel {
+  max-width: 1050px;
+  margin: 0 auto;
+  position: relative;
+  transition: opacity .3s ease;
+}
+.hidden { display: none; }
+
+/* ---------- Form & Cards ---------- */
+.entry-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 1rem;
+}
+.entry-form input,
+.entry-form textarea {
+  padding: 14px;
+  border-radius: 10px;
+  border: 2px solid rgba(106,17,203,.2);
+  font-size: 1rem;
+  resize: vertical;
+  transition: box-shadow .2s ease;
+}
+.entry-form input:focus,
+.entry-form textarea:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(106,17,203,.5);
+}
+.entry-form textarea {
+  min-height: 140px;
+}
+.buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ---------- Entries List ---------- */
+.entries-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.controls input {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(106,17,203,.25);
+  font-size: .9rem;
+}
+.entries-list {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+}
+.entry {
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px;
+  position: relative;
+  box-shadow: 0 35px 90px -15px rgba(106,17,203,.15);
+  transition: transform .25s ease;
+}
+.entry:hover { transform: translateY(-2px); }
+.entry h4 { margin: 0 0 6px; }
+.entry small {
+  display: block;
+  margin-bottom: 8px;
+  font-size: .8rem;
+  color: #666;
+}
+.entry p { margin: 8px 0 0; line-height: 1.45; }
+.entry .actions { margin-top: 12px; display: flex; gap: 8px; }
+.delete-btn {
+  background: #ff6a88;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font-size: .8rem;
+  transition: filter .2s ease;
+}
+.delete-btn:hover { filter: brightness(1.1); }
+
+/* ---------- Prompt Box ---------- */
+.prompt-box {
+  background: #fff;
+  padding: 16px 18px;
+  border-radius: 12px;
+  box-shadow: 0 30px 80px -10px rgba(106,17,203,.1);
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  position: relative;
+}
+.prompt-box::before {
+  content: '💡';
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 1.5rem;
+}
+
+/* ---------- Settings/About ---------- */
+.setting-item {
+  background: rgba(255,255,255,0.9);
+  padding: 14px 16px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.setting-item label { flex: 1; font-weight: 600; }
+.setting-item button {
+  background: linear-gradient(135deg,#ff8acc 0%,#6a11cb 60%);
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: .9rem;
+}
+.setting-item button:hover { filter: brightness(1.05); }
+.about-extra { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 14px; }
+.card-small {
+  flex: 1;
+  background: #fff;
+  border-radius: 10px;
+  padding: 14px 16px;
+  box-shadow: 0 25px 70px -10px rgba(106,17,203,.1);
+}
+.card-small h4 { margin-top: 0; }
+.note { margin-top: 6px; font-size: .8rem; color: #555; }
+
+/* video wrapper */
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-top: 8px;
+}
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Common button base */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+}
+.btn-primary {
+  background: linear-gradient(135deg,#ff8acc 0%,#6a11cb 60%);
+  color: white;
+  box-shadow: 0 15px 50px -5px rgba(106,17,203,.5);
+}
+.btn-primary:hover { filter: brightness(1.08); transform: translateY(-2px); }
+.btn-primary:active { transform: translateY(1px); }
+.btn-secondary {
+  background: #ffffff;
+  color: #6a11cb;
+  border: 2px solid #6a11cb;
+  box-shadow: 0 10px 35px -5px rgba(106,17,203,.15);
+}
+.btn-secondary:hover { background: #f4f0fb; filter: brightness(1.02); transform: translateY(-1px); }
+.btn-export { background: #5dd39e; color: white; box-shadow: 0 12px 40px -5px rgba(29,151,108,.4); }
+.btn-export:hover { filter: brightness(1.07); transform: translateY(-1px); }
+.btn-danger { background: #ff6a88; color: white; box-shadow: 0 12px 40px -5px rgba(255,106,136,.4); }
+.btn-danger:hover { filter: brightness(1.1); transform: translateY(-1px); }
+.btn-small { padding: 6px 14px; font-size: 0.75rem; }
+.btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+/* ---------- Existing responsive for wider breakpoints ---------- */
+@media (max-width: 1050px) {
+  .app-container { flex-direction: column; }
+  .sidebar { width:100%; flex-direction: row; overflow-x:auto; gap:8px; padding:14px; }
+  .sidebar h2 { display:none; }
+  .sidebar button { flex:1; font-size:.75rem; }
+  .main { padding:1rem; }
+  .cards { grid-template-columns:1fr; }
+}
+
+/* ---------- Added mobile overrides (phones & small tablets) ---------- */
+@media (max-width: 768px) {
+  /* reduce base font for small screens so content fits nicely */
+  html { font-size: 15px; }
+
+  /* Intro adjustments */
+  .intro-container {
+    padding: 1.25rem 1rem;
+    border-radius: 14px;
+    box-shadow: 0 30px 70px -20px rgba(133,94,194,.45);
+    max-width: 92%;
+  }
+  .intro-container h1 {
+    font-size: 1.6rem;
+    line-height: 1.12;
+  }
+  .intro-container p { font-size: 0.98rem; }
+
+  /* Buttons smaller and full width on tiny screens */
+  .primary-btn {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    width: auto;
+  }
+  .buttons-row { gap: 8px; }
+
+  /* Main layout spacing */
+  .main { padding: 1rem; }
+  .panel { padding-bottom: 20px; }
+
+  /* Forms and controls take full width */
+  .entry-form input,
+  .entry-form textarea,
+  .controls input,
+  .buttons .btn {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Entries / cards smaller */
+  .entries-list { gap: 12px; }
+  .entry { padding: 14px; }
+
+  /* Sidebar becomes horizontal (already handled at 1050) — ensure buttons stay readable */
+  .sidebar { padding: 12px; gap: 8px; }
+  .sidebar button { padding: 8px 10px; font-size: 0.82rem; min-width: 90px; }
+
+  /* Prevent horizontal scroll */
+  html, body { overflow-x: hidden; }
+}
+
+/* Extra-small phones */
+@media (max-width: 420px) {
+  .intro-container h1 { font-size: 1.3rem; }
+  .intro-container p { font-size: 0.95rem; }
+  .primary-btn { padding: 9px 16px; font-size: 0.92rem; }
+  .sidebar button { font-size: 0.78rem; padding: 8px 8px; }
+  .entry { padding: 12px; }
+  .entry-form textarea { min-height: 110px; }
+}

@@ -1,0 +1,300 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard • Digital Diary</title>
+  <!-- Prevent flicker -->
+  <style>body{visibility:hidden;}</style>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <h2>📔 My Diary</h2>
+      <button onclick="showSection('newEntry')"><i class="fa-solid fa-pen-fancy"></i> New Memory</button>
+      <button onclick="showSection('entries')"><i class="fa-solid fa-book-open"></i> View my Memories</button>
+      <button onclick="showSection('prompt')"><i class="fa-solid fa-lightbulb"></i> Daily Prompt</button>
+      <button onclick="showSection('settings')"><i class="fa-solid fa-gear"></i> Settings</button>
+      <button onclick="showSection('about')"><i class="fa-solid fa-info-circle"></i> About Us</button>
+    </aside>
+
+    <main class="main">
+      <!-- HOME is replaced by newEntry initially -->
+      <section id="newEntry" class="panel">
+        <h2>New memory</h2>
+        <form id="entryForm" class="entry-form">
+          <div class="form-row">
+            <div class="field">
+              <label>Title</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="text" id="entryTitle" placeholder="Entry title" required />
+            </div><br>
+            <div class="field">
+              <label>Date</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="date" id="entryDate" required />
+            </div>
+          </div>
+          <div class="field">
+            <label>Mood</label>&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="text" id="entryMood" placeholder="E.g., 😊, reflective" />
+          </div>
+          <div class="field">
+            <label></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <textarea id="entryText" placeholder="Write your diary..." required></textarea>
+          </div>
+          <div class="buttons">
+            <button type="submit" class="primary-btn">Save Entry</button>
+            <button class="btn btn-secondary" onclick="showSection('entries')">
+              <i class="fa-solid fa-book-open"></i> View Entries
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <section id="entries" class="panel hidden">
+        <div class="entries-header">
+          <div>
+            <h2>Past Diary Entries</h2>
+          </div>
+          <div class="controls">
+            <input type="text" id="searchInput" placeholder="Search..." oninput="renderEntries()" />
+            <input type="date" id="filterDate" onchange="renderEntries()" />
+            <button class="btn btn-export" onclick="exportAllAsText()">
+              <i class="fa-solid fa-file-export"></i> Export .txt
+            </button>
+            <button class="btn btn-danger" onclick="clearAll()">
+              <i class="fa-solid fa-trash"></i> Clear All
+            </button>
+          </div>
+        </div>
+        <div id="entriesContainer" class="entries-list"></div>
+      </section>
+
+      <section id="prompt" class="panel hidden">
+        <h2>📝 Daily Writing Prompt</h2><br><br>
+        <div id="promptBox" class="prompt-box"></div>
+        <div style="margin:8px 0; display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="primary-btn small" onclick="newPrompt()">Another Prompt</button>
+          <button class="primary-btn small" onclick="copyPromptToNew()">Use Prompt in New Entry</button>
+        </div>
+        <p class="note">Use this to inspire your next entry.</p><br><br><br>
+        <img src="image/d1.jpg" alt="Description of image"style="display:block; margin:20px auto; max-width:300px; border-radius:10px;">
+      </section>
+
+      <section id="settings" class="panel hidden">
+        <h2>Settings</h2><br><br>
+        <div class="setting-item">
+          <label>Theme:</label>
+          <button onclick="toggleTheme()">Toggle Light / Dark</button>
+        </div>
+        <div class="setting-item">
+          <label>Export:</label>
+          <button onclick="exportAllAsText()">Export All Entries as .txt</button>
+        </div>
+        <div class="setting-item">
+          <label>Clear All:</label>
+          <button onclick="clearAll()">Delete All Entries</button>
+        </div>
+      </section>
+
+      <section id="about" class="panel hidden">
+        <h2>About This Website</h2><br><br>
+        <p>This Digital Diary is a lightweight client-side app for journaling. Everything you write stays in your browser.</p><br><br>
+        <ul>
+          <li>Create and store daily entries with date and mood.</li> <br>
+          <li>Browse, search, and filter past entries.</li><br>
+          <li>Daily prompts to spark reflection.</li><br>
+          <li>Export your diary as a text file.</li><br>
+          <li>Light/dark theme toggle for comfort.</li><br>
+        </ul>
+        <div class="about-extra">
+          <div class="card-small">
+            <h4>Why Journal?</h4>
+            <p>Regular writing clears the mind, tracks growth, and preserves memory.</p>
+          </div>
+          <div class="card-small">
+            <h4>Quick Tip</h4>
+            <p>Begin with “Today I noticed…” or “I’m grateful for…” if you get stuck.</p>
+          </div>
+        </div>
+        <div style="margin-top:20px;">
+          
+          <!-- Drop a video file named video.mp4 in same folder or update src -->
+          <div style="margin-top:20px;">
+            <h4>Preview Video</h4>
+            <div class="video-wrapper">
+              <iframe 
+                src="https://www.youtube.com/embed/sHVmQiMibxk?si=qKDP8qeLx7EinqhG" 
+                title="Digital Diary Walkthrough" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen
+                loading="lazy"
+              ></iframe>
+            </div>
+          </div>
+          
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- FontAwesome for icons (optional but adds polish) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js" defer></script>
+
+  <script>
+    // show after early guard
+    document.body.style.visibility = "visible";
+
+    // keys
+    const ENTRIES_KEY = "diaryEntries";
+    const THEME_KEY = "diaryTheme";
+    const PROMPTS = [
+      "What made you smile today?",
+      "Describe a recent challenge you overcame.",
+      "If you could give advice to your past self, what would it be?",
+      "List three things you're grateful for today.",
+      "What’s something new you learned this week?",
+      "What small goal do you have for tomorrow?",
+      "How are you feeling right now and why?",
+      "Recall a comforting memory."
+    ];
+
+    // section handling
+    function showSection(name) {
+      document.querySelectorAll(".panel").forEach(p => p.classList.add("hidden"));
+      const sec = document.getElementById(name);
+      if (sec) sec.classList.remove("hidden");
+      if (name === "entries") renderEntries();
+      if (name === "prompt") loadPrompt();
+    }
+
+    // entry form save
+    document.getElementById("entryForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      const title = document.getElementById("entryTitle").value.trim();
+      const text = document.getElementById("entryText").value.trim();
+      const date = document.getElementById("entryDate").value;
+      const mood = document.getElementById("entryMood").value.trim();
+      if (!title || !text || !date) {
+        alert("Title, content, and date are required.");
+        return;
+      }
+      const entries = JSON.parse(localStorage.getItem(ENTRIES_KEY) || "[]");
+      entries.unshift({ title, text, date, mood });
+      localStorage.setItem(ENTRIES_KEY, JSON.stringify(entries));
+      this.reset();
+      showSection("entries");
+    });
+
+    // render entries with search & filter
+    function renderEntries(){
+      const container = document.getElementById("entriesContainer");
+      container.innerHTML = "";
+      let entries = JSON.parse(localStorage.getItem(ENTRIES_KEY) || "[]");
+      const keyword = document.getElementById("searchInput")?.value.toLowerCase() || "";
+      const filterDate = document.getElementById("filterDate")?.value || "";
+      if (keyword) {
+        entries = entries.filter(e => e.title.toLowerCase().includes(keyword) || e.text.toLowerCase().includes(keyword) || (e.mood && e.mood.toLowerCase().includes(keyword)));
+      }
+      if (filterDate) {
+        entries = entries.filter(e => e.date === filterDate);
+      }
+      if (!entries.length) {
+        container.innerHTML = "<p>No entries found.</p>";
+        return;
+      }
+      entries.forEach((e, i) => {
+        const div = document.createElement("div");
+        div.className = "entry";
+        div.innerHTML = `
+          <div style="display:flex;justify-content:space-between;flex-wrap:wrap;">
+            <div>
+              <h4>${escapeHtml(e.title)}</h4>
+              <small>${e.date}${e.mood ? " | Mood: " + escapeHtml(e.mood) : ""}</small>
+            </div>
+            <div class="actions">
+              <button onclick="deleteEntry(${i})" class="delete-btn">Delete</button>
+            </div>
+          </div>
+          <p>${escapeHtml(e.text)}</p>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function deleteEntry(idx){
+      if(!confirm("Delete this entry?")) return;
+      let entries = JSON.parse(localStorage.getItem(ENTRIES_KEY) || "[]");
+      entries.splice(idx,1);
+      localStorage.setItem(ENTRIES_KEY, JSON.stringify(entries));
+      renderEntries();
+    }
+
+    // export entries
+    function exportAllAsText(){
+      const entries = JSON.parse(localStorage.getItem(ENTRIES_KEY) || "[]");
+      if (!entries.length) return alert("No entries to export.");
+      const content = entries.map((e,i)=>`Entry ${i+1}:\nTitle: ${e.title}\nDate: ${e.date}\nMood: ${e.mood||'-'}\n${e.text}\n---\n`).join("\n");
+      const blob = new Blob([content], { type: "text/plain" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "diary_entries.txt";
+      a.click();
+    }
+
+    function clearAll(){
+      if(!confirm("Delete all entries?")) return;
+      localStorage.removeItem(ENTRIES_KEY);
+      renderEntries();
+    }
+
+    // prompt logic
+    function loadPrompt(){
+      const storedDate = localStorage.getItem("promptDate");
+      const today = new Date().toISOString().slice(0,10);
+      if (storedDate !== today) {
+        const idx = Math.floor(Math.random()*PROMPTS.length);
+        localStorage.setItem("promptText", PROMPTS[idx]);
+        localStorage.setItem("promptDate", today);
+      }
+      document.getElementById("promptBox").innerText = localStorage.getItem("promptText") || PROMPTS[0];
+    }
+
+    function newPrompt(){
+      localStorage.removeItem("promptDate");
+      loadPrompt();
+    }
+
+    function copyPromptToNew(){
+      showSection("newEntry");
+      const promptText = document.getElementById("promptBox").innerText || "";
+      document.getElementById("entryText").value = promptText + "\n\n";
+    }
+
+    // theme persistence
+    function applySavedTheme(){
+      const t = localStorage.getItem(THEME_KEY);
+      if (t === "dark") document.body.classList.add("dark-theme");
+    }
+    function toggleTheme(){
+      document.body.classList.toggle("dark-theme");
+      const isDark = document.body.classList.contains("dark-theme");
+      localStorage.setItem(THEME_KEY, isDark ? "dark" : "light");
+    }
+    applySavedTheme();
+
+    function escapeHtml(str=""){
+      return str.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+    }
+
+    // initial
+    showSection("newEntry");
+  </script>
+
+  
+</body>
+</html>
+
+
