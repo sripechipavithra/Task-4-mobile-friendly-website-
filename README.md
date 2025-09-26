@@ -1,4 +1,4 @@
-# Task-4-mobile-friendly-website-
+# Task-4-mobile-friendly-website
 Converted this desktop-only page into a mobile-friendly site using CSS media queries.
 
 ## What I changed
